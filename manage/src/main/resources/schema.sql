@@ -34,7 +34,7 @@ CREATE TABLE Users (
     title       VARCHAR(50) DEFAULT NULL,
     bio         VARCHAR(255) DEFAULT NULL,
     enabled     BOOLEAN DEFAULT FALSE,
-    locked      BOOLEAN DEFAULT FALSE,
+    non_locked  BOOLEAN DEFAULT FALSE,
     using_mfa   BOOLEAN DEFAULT FALSE,
     image_url   VARCHAR(255) DEFAULT 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
     create_ts   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -78,9 +78,9 @@ Create Table Events
     CONSTRAINT Events_Type_UQ UNIQUE (type)
 );
 
-DROP TABLE IF EXISTS UserEvents;
+DROP TABLE IF EXISTS User_Events;
 
-Create Table UserEvents ( 
+Create Table User_Events ( 
     user_event_id  BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id         BIGINT UNSIGNED NOT NULL,
     event_id        BIGINT UNSIGNED NOT NULL,
@@ -92,9 +92,9 @@ Create Table UserEvents (
     FOREIGN KEY (event_id) REFERENCES Events (event_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-DROP TABLE IF EXISTS AccountVerifications;
+DROP TABLE IF EXISTS Account_Verifications;
 
-Create Table AccountVerification ( 
+Create Table Account_Verification ( 
     account_verification_id     BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id                     BIGINT UNSIGNED NOT NULL,
     verification_url            VARCHAR(255) NOT NULL,
@@ -105,9 +105,9 @@ Create Table AccountVerification (
     CONSTRAINT AccountVerification_verification_url_uq UNIQUE (verification_url)
 );
 
-DROP TABLE IF EXISTS PasswordVerification;
+DROP TABLE IF EXISTS Password_Verification;
 
-Create Table PasswordVerification ( 
+Create Table Password_Verification ( 
     password_verification_id    BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id                     BIGINT UNSIGNED NOT NULL,
     verification_url            VARCHAR(255) NOT NULL,
@@ -118,9 +118,9 @@ Create Table PasswordVerification (
     CONSTRAINT PasswordVerification_verification_url_uq UNIQUE (verification_url)
 );
 
-DROP TABLE IF EXISTS MFAVerification;
+DROP TABLE IF EXISTS MFA_Verification;
 
-Create Table MFAVerification ( 
+Create Table MFA_Verification ( 
     mfa_verification_id         BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id                     BIGINT UNSIGNED NOT NULL,
     mfa_token                   VARCHAR(255) NOT NULL,
